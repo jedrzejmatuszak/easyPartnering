@@ -26,30 +26,11 @@ class XKomSpider(scrapy.Spider):
 
         items = Task1Item()
 
-        product_name = response.css('div.sc-1yu46qn-12.gmIvDY a h3::attr(title)').extract()
-        price = response.css('div.sc-1yu46qn-16.fpNTm span.hNZEsQ::text').extract()
-
-        items['product_name'] = product_name
-        items['price'] = price
-
-        yield items
-
-
-class Test(scrapy.Spider):
-    name = 'Test'
-    start_urls = [
-        'https://www.x-kom.pl/g-2/c/159-laptopy-notebooki-ultrabooki.html'
-    ]
-
-    def parse(self, response, **kwargs):
-
-        items = Task1Item()
-
-        all_products_on_page = response.css('div#listing-container')
+        all_products_on_page = response.css('div#listing-container div.sc-1yu46qn-6.kUnYNG.sc-2ride2-0.eYsBmG')
 
         for product in all_products_on_page:
-            product_name = product.css('div.kUnYNG div.gmIvDY h3::attr(title)').extract()
-            price = product.css('div.fpNTm span.hNZEsQ::text').extract()
+            product_name = product.css('div.gmIvDY h3::attr(title)').extract()[0]
+            price = product.css('div.fpNTm span.hNZEsQ::text').extract()[0]
 
             items['product_name'] = product_name
             items['price'] = price
