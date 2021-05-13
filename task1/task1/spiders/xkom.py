@@ -10,14 +10,12 @@ class XKomSpider(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         categories = response.css('li.sc-13hctwf-3 a[role="menuitem"]::attr(href)').extract()
-        yield {'categories': categories}
 
         for category in categories:
             yield response.follow(category, callback=self.parse_categories)
 
     def parse_categories(self, response):
         subcategories = response.css('li.sc-16n31g-4.fcMCVZ ul.sc-16n31g-2.foNRTB li a::attr(href)').extract()
-        yield {'subcategories': subcategories}
 
         for subcategory in subcategories:
             yield response.follow(subcategory, callback=self.parse_subcategories)
