@@ -7,6 +7,5 @@ import scrapy
 
 
 class Task1Item(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    product_name = scrapy.Field()
+    price = scrapy.Field()
